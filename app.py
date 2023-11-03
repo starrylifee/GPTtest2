@@ -1,14 +1,11 @@
 import streamlit as st
 import openai
 
-#openai api key
-openai.api_key = st.secrets["api_key"]
-
 #페이지 레이아웃 설정
 st.set_page_config(layout="wide")
 
 #페이지의 메인 이름
-st.title("사회6학년 문제해결학습 인공지능 도구")
+st.title("초등학교 인공지능 도구")
 
 # #가로 줄
 st.divider()
@@ -33,51 +30,3 @@ text = '''
 해찬이는 도시의 삶이 편리하긴 하지만, 마을의 싱그러운 자연과 밤하늘의 별, 그리고 사람들과의 따뜻한 인사가 그리웠어요. 그는 도시에서도 마을의 따스함을 느낄 수 있는 방법을 찾아야겠다고 생각했어요.
  '''
 st.write(text)
-# # st.write("~~~") 의 형태로도 출력 가능
-
-# #링크 넣기
-# st.markdown("[위키피디아 링크](https://ko.wikipedia.org/wiki/%EC%84%B8%EC%A2%85)")
-
-# #학생들이 텍스트 입력하는 곳 만들기
-# #조사한 자료를 research에 저장
-research = st.text_input("도시화를 해결할 수 있는 해결방안을 적고 엔터를 눌러주세요.")
-
-# st.write(research)
-
-st.divider()
-
-# #ChatGPT API 활용하기 response를 불러오는 함수 만들기
-@st.cache_data #반복 수행을 막아줌
-def gptapi(persona, user):
-     response = openai.ChatCompletion.create(
-     model="gpt-3.5-turbo",
-     messages=[
-         {"role": "system", "content" : persona},
-         {"role": "user", "content": user}
-     ],
-     max_tokens = 1000,
-     temperature = 1
-     )
-     return response["choices"][0]["message"]["content"]
-
-# #prompt 설정하기
-persona_prompt1 = '''
-너는 사회선생님이야. 지금까지 우리 반은 도시화의 문제점(인구과밀, 환경오염, 사람이 적어지는 농촌)에 대해서 배웠어. 학생들은 도시화를 막는 방법에 대해서 고민했고, 학생들이 낸 해답을 너에게 제시할거야.
-1단계: 학생이 생각한 내용을 간단히 요약하고, 구체적으로 칭찬해줘.
-2단계: 학생이 제시한 해결책이 불러일으킬 수 있는 문제점을 1가지 짚고 문제 사례를 말해줘.
-3단계: 다음의 항목으로 점수를 표현해줘. 총점 100점, 창의성 40점 만점, 현실성 30점, 논리성 30점
-출력은 단계를 표현하지 않고 편지글처럼 선생님으로서의 대답만 글로 표현해줘.
-'''
-
-# persona_prompt2 = '''
-#     너는 역사선생님이야. 학생들이 조사해온 자료를 요악한 내용을 보고, 문제를 만들어줘
-#     '''
-
-# #클릭해야 실행되도록 버튼 만들기
-if st.button("나의 해결방안 논의하기"): 
-#     #복잡한 단계는 나누어 진행하기
-     step1 = gptapi(persona_prompt1, research)
-     st.write(step1)
-
-#     step2 = gptapi(persona_prompt2, step1)
-#     st.write(step2)
