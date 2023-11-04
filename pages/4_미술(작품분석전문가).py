@@ -30,13 +30,28 @@ subject2 = st.text_input("그림각 공간에 드려진 것들에 대해서 적�
 generate_button = st.button('그림을 만들어봐요.')
 
 if generate_button and elements1 and elements2 and elements3 and principles1 and subject1 and subject2:
-    prompt_text = elements1 + "하고" + elements2 + "하고" + elements3 + "하고" + principles1 + "하고" + subject1 + "하고" + subject2 + "한 그림을 그려줘"
-    response = openai.Image.create(
-        prompt=prompt_text,
-        n=1,
-        size="256x256"
+    # 한국어 프롬프트를 영어로 번역합니다.
+    translation_prompt = f"{elements1}, {elements2}, {elements3}, {principles1}, {subject1}, {subject2} - 이 설명을 영어로 번역해주세요."
+    @st.cache_data
+    translation_response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=translation_prompt,
+        max_tokens=60,
+        temperature=0.5
     )
     
-    image_url = response['data'][0]['url']
+    # 번역된 영어 텍스트를 가져옵니다.
+    translated_text = translation_response.choices[0].text.strip()
     
-    st.image(image_url, caption='Generated Image')
+    # 번역된 텍스트를 사용하여 이미지를 생성합니다.
+    image_response = openai.Image.create(
+        prompt=translated_text,
+        n=1,
+        size="1024x1024"
+    )
+    
+    # 생성된 이미지의 URL을 가져옵니다.
+    image_url = image_response['data'][0]['url']
+    
+    # 이미지를 화면에 표시합니다.
+    st.image(image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
