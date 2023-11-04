@@ -46,7 +46,7 @@ if generate_button and elements1 and elements2 and elements3 and principles1 and
     image_response = openai.Image.create(
         prompt=translated_text,
         n=1,
-        size="1024x1024"
+        size="256x256"
     )
     
     # 생성된 이미지의 URL을 가져옵니다.
@@ -54,3 +54,4 @@ if generate_button and elements1 and elements2 and elements3 and principles1 and
     
     # 이미지를 화면에 표시합니다.
     st.image(image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
+    st.write(translated_text)
