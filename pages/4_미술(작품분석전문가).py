@@ -30,7 +30,7 @@ subject2 = st.text_input("그림각 공간에 드려진 것들에 대해서 적�
 generate_button = st.button('그림을 만들어봐요.')
 
 if generate_button and elements1 and elements2 and elements3 and principles1 and subject1 and subject2:
-       prompt_text = elements1 + "하고" + elements2 + "하고" + elements3 + "하고" + principles1 + "하고" + subject1 + "하고" + subject2 + "한 그림을 그려줘"
+    prompt_text = elements1 + "하고" + elements2 + "하고" + elements3 + "하고" + principles1 + "하고" + subject1 + "하고" + subject2 + "한 그림을 그려줘"
     response = openai.Image.create(
         prompt=prompt_text,
         n=1,
