@@ -32,7 +32,6 @@ generate_button = st.button('그림을 만들어봐요.')
 if generate_button and elements1 and elements2 and elements3 and principles1 and subject1 and subject2:
     # 한국어 프롬프트를 영어로 번역합니다.
     translation_prompt = f"{elements1}, {elements2}, {elements3}, {principles1}, {subject1}, {subject2} - 이 설명을 영어로 번역해주세요."
-    @st.cache_data
     translation_response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=translation_prompt,
