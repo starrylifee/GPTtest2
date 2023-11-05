@@ -36,7 +36,7 @@ if function1 and function2 and function3:  # 입력이 모두 존재할 때만 �
 
     st.divider()
 
-    @st.cache_data
+    @st.experimental_memo
     def gptapi(persona, user):
         response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",

@@ -30,7 +30,7 @@ research = st.text_input("도시화를 해결할 수 있는 해결방안을 적�
 
 st.divider()
 
-@st.cache_data
+@st.experimental_memo
 def gptapi(persona, user):
      response = openai.ChatCompletion.create(
      model="gpt-3.5-turbo",
