@@ -16,6 +16,11 @@ text = '''
 '''
 st.write(text)
 
+image_url = 'https://img.hani.co.kr/imgdb/resize/2012/0310/133125919362_20120310.JPG'
+
+# Display the image using the st.image function
+st.image(image_url, caption='Composition II with Red Blue and Yellow')
+
 # 사용자 입력
 elements1 = st.text_input("점, 선, 면에 대해서 적어보세요.")
 elements2 = st.text_input("그림의 질감에 대해서 적어보세요")
@@ -45,10 +50,7 @@ if generate_button:
             
             # 번역된 영어 텍스트를 가져옵니다.
             translated_text = translation_response.choices[0].text.strip()
-
-            st.write(translation_prompt)
-            st.write(translated_text)
-
+            
             # 이미지 생성 요청
             image_response = openai.Image.create(
                 prompt=translated_text,
