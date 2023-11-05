@@ -46,6 +46,9 @@ if generate_button:
             # 번역된 영어 텍스트를 가져옵니다.
             translated_text = translation_response.choices[0].text.strip()
 
+            st.write(translation_prompt)
+            st.write(translated_text)
+
             # 이미지 생성 요청
             image_response = openai.Image.create(
                 prompt=translated_text,
