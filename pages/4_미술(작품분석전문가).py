@@ -54,7 +54,7 @@ if generate_button:
             )
             
             # 생성된 이미지의 URL을 가져옵니다.
-            image_url = image_response.data[0]['url']
+            image_url = image_response['data'][0]['url']
             
             # 이미지를 화면에 표시합니다.
             st.image(image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
