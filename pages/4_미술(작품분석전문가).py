@@ -46,10 +46,9 @@ if generate_button:
         
         # 이미지 생성을 위한 요청을 보냅니다 (DALL-E 엔진 사용).
         image_response = openai.Completion.create(
-            model="image-dalle-babbage-001",
             prompt=translated_text,
             n=1,
-            size="256x256"
+            size="512x512"
         )
         
         # 생성된 이미지의 URL을 가져옵니다.
