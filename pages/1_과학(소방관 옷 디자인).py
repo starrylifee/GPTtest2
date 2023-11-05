@@ -70,7 +70,7 @@ if function1 and function2 and function3:  # 입력이 모두 존재할 때만 �
     # #클릭해야 실행되도록 버튼 만들기
     if st.button("나의 해결방안 논의하기"): 
             step1 = gptapi(persona_prompt1, multifunction)
-        st.write(step1)
+            st.write(step1)
 
     #     step2 = gptapi(persona_prompt2, step1)
     #     st.write(step2)
