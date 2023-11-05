@@ -31,7 +31,7 @@ generate_button = st.button('그림을 만들어봐요.')
 
 if generate_button and elements1 and elements2 and elements3 and principles1 and subject1 and subject2:
     # 한국어 프롬프트를 영어로 번역합니다.
-    translation_prompt = f"{elements1}, {elements2}, {elements3}, {principles1}, {subject1}, {subject2} - 이 설명을 영어로 번역해주세요."
+    translation_prompt = f"{elements1}, {elements2}, {elements3}, {principles1}, {subject1}, {subject2} - 이 설명을 영어로 번역해주세요. 만일 초등학생에게 유해한 이미지를 요청할 경우에는 생성하지 말아주세요."
     translation_response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=translation_prompt,
@@ -54,4 +54,5 @@ if generate_button and elements1 and elements2 and elements3 and principles1 and
     
     # 이미지를 화면에 표시합니다.
     st.image(image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
+    st.write(translation_prompt)
     st.write(translated_text)
