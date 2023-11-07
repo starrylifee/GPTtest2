@@ -3,14 +3,6 @@ import openai
 
 openai.api_key = st.secrets["api_key"]
 
-# 평가 결과를 초기화하는 함수
-def reset_evaluation():
-    st.session_state['evaluation'] = ""
-
-# 입력 필드의 상태를 관리하는 함수
-def on_change():
-    reset_evaluation()
-
 st.set_page_config(layout="wide")
 
 st.title("토론 수업용 인공지능 도우미")
@@ -41,7 +33,7 @@ if argument and evidence1 and evidence2 and evidence3:  # 입력이 모두 존�
     st.divider()
 
     
-    def gptapi(prompt):
+    def gptapi(prompt, argument_evidence):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -69,5 +61,5 @@ if argument and evidence1 and evidence2 and evidence3:  # 입력이 모두 존�
     '''
 
     if st.button("주장과 근거 평가받기"): 
-        evaluation = gptapi(persona_prompt)
+        evaluation = gptapi(persona_prompt, argument_evidence)
         st.write(evaluation)
