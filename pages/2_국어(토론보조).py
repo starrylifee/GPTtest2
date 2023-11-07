@@ -3,13 +3,21 @@ import openai
 
 openai.api_key = st.secrets["api_key"]
 
+# 평가 결과를 초기화하는 함수
+def reset_evaluation():
+    st.session_state['evaluation'] = None
+
+# 입력 필드의 상태를 관리하는 함수
+def on_change():
+    reset_evaluation()
+
 st.set_page_config(layout="wide")
 
 st.title("토론 수업용 인공지능 도우미")
 
 st.divider()
 
-st.header("미션")
+st.header("도전과제")
 
 text = '''
 학생 여러분, 오늘의 토론 주제는 무엇일까요? 여러분이 선택한 주제에 대한 주장을 준비했나요?
@@ -32,7 +40,7 @@ if argument and evidence1 and evidence2 and evidence3:  # 입력이 모두 존�
 
     st.divider()
 
-    @st.experimental_memo
+    
     def gptapi(prompt):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -63,4 +71,3 @@ if argument and evidence1 and evidence2 and evidence3:  # 입력이 모두 존�
     if st.button("주장과 근거 평가받기"): 
         evaluation = gptapi(persona_prompt)
         st.write(evaluation)
-
