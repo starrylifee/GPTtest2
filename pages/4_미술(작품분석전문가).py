@@ -29,8 +29,12 @@ images = {
 # 드롭다운 메뉴를 생성하고 사용자의 선택을 가져옵니다.
 selected_caption = st.selectbox("미술 작품을 선택하세요:", options=list(images.keys()))
 
-# 선택된 캡션에 해당하는 이미지를 표시합니다.
-st.image(images[selected_caption], caption=selected_caption)
+# 이미지를 가운데 정렬하기 위해 컬럼을 사용합니다.
+col1, col2, col3 = st.columns([1, 2, 1])  # 1:2:1 비율로 컬럼을 생성합니다.
+
+# 가운데 컬럼(col2)에 이미지를 표시합니다.
+with col2:
+    st.image(images[selected_caption], caption=selected_caption)
 
 # 사용자 입력
 elements1 = st.text_input("점, 선, 면에 대해서 적어보세요.")
