@@ -27,7 +27,7 @@ if generate_button:
     else:
         # 입력된 시, 소재, 스타일을 영어로 번역하는 로직
         try:
-            translation_prompt = f"다음 시를 영어로 번역해주세요: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {style}"
+            translation_prompt = f"다음 시를 영어로 번역한 후, 이 시와 어울리는 그림을 그려주세요. 시: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {style}"
             translation_response = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=translation_prompt,
