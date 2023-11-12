@@ -1,5 +1,8 @@
 import streamlit as st
 from openai import OpenAI
+
+OpenAI.api_key = st.secrets["api_key"]
+
 client = OpenAI()
 
 response = client.images.generate(
