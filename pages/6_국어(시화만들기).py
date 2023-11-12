@@ -44,24 +44,23 @@ if generate_button:
                 n=3,
                 size="1024x1024"
             )
-                        
-            if 'data' in image_response:    
-                # 각 이미지에 대한 처리
-                for i, data in enumerate(image_response['data']):
-                    image_url = data['url']
-                    
-                    # 이미지를 화면에 표시합니다.
-                    st.image(image_url, caption=f'이미지 {i + 1}')
+                                   
+             # 각 이미지에 대한 처리
+            for i, data in enumerate(image_response['data']):
+                image_url = data['url']
+                
+                # 이미지를 화면에 표시합니다.
+                st.image(image_url, caption=f'이미지 {i + 1}')
 
-                    # 이미지 데이터를 다운로드하기
-                    response = requests.get(image_url)
-                    image_bytes = BytesIO(response.content)
+                # 이미지 데이터를 다운로드하기
+                response = requests.get(image_url)
+                image_bytes = BytesIO(response.content)
 
-                    # 각 이미지에 대한 다운로드 버튼 추가
-                    st.download_button(label=f"이미지 {i + 1} 다운로드",
-                                    data=image_bytes,
-                                    file_name=f"downloaded_image_{i + 1}.jpg",
-                                    mime="image/jpeg")
+                # 각 이미지에 대한 다운로드 버튼 추가
+                st.download_button(label=f"이미지 {i + 1} 다운로드",
+                                   data=image_bytes,
+                                   file_name=f"downloaded_image_{i + 1}.jpg",
+                                   mime="image/jpeg")
             
         except openai.error.OpenAIError as e:
             st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")
