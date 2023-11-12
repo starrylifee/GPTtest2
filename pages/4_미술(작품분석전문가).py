@@ -19,7 +19,7 @@ st.write(text)
 image_url = 'https://img.hani.co.kr/imgdb/resize/2012/0310/133125919362_20120310.JPG'
 
 # Display the image using the st.image function
-st.image(image_url, caption='Composition II with Red Blue and Yellow')
+#st.image(image_url, caption='Composition II with Red Blue and Yellow')
 
 # 사용자 입력
 elements1 = st.text_input("점, 선, 면에 대해서 적어보세요.")
