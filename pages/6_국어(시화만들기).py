@@ -15,7 +15,21 @@ st.header("시를 입력하고 시에 어울리는 그림을 생성해보세요"
 # 사용자 입력
 poem = st.text_area("시를 여기에 입력하세요.")
 subject = st.text_input("그림에 꼭 들어갔으면 하는 소재를 입력하세요.")
-style = st.selectbox("그림의 스타일을 선택하세요.", ["몽환적인", "사실적인", "만화스타일", "추상적인", "임프레셔니즘"])
+
+# 스타일 옵션과 그에 해당하는 영어 단어의 매핑
+style_options = {
+    "몽환적인": "dreamy",
+    "사실적인": "realistic",
+    "만화스타일": "cartoon",
+    "추상적인": "abstract",
+    "임프레셔니즘": "impressionistic"
+}
+
+# 사용자에게 스타일을 한글로 선택하게 함
+selected_style_korean = st.selectbox("그림의 스타일을 선택하세요.", list(style_options.keys()))
+
+# 선택된 스타일을 영어로 변환
+selected_style_english = style_options[selected_style_korean]
 
 # 이미지 생성 버튼
 generate_button = st.button('이미지 생성')
@@ -27,7 +41,7 @@ if generate_button:
     else:
         # 입력된 시, 소재, 스타일을 영어로 번역하는 로직
         try:
-            translation_prompt = f"너는 초등학생의 동시를 바탕으로 어울리는 그림을 그리는 화가야. 다음 시를 영어로 번역한 후 시의 내용을 읽고, 제목과 내용과 소재에 해당하는 그림을 그려주세요. 시: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {style}"
+            translation_prompt = f"너는 초등학생의 동시를 바탕으로 어울리는 그림을 그리는 화가야. 다음 시를 영어로 번역한 후 시의 내용을 읽고, 제목과 내용과 소재에 해당하는 그림을 그려주세요. 시: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {selected_style_english}"
             translation_response = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=translation_prompt,
@@ -45,7 +59,7 @@ if generate_button:
                 size="1024x1024"
             )
                                    
-             # 각 이미지에 대한 처리
+            # 각 이미지에 대한 처리
             for i, data in enumerate(image_response['data']):
                 image_url = data['url']
                 
