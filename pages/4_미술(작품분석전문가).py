@@ -84,7 +84,7 @@ if generate_button:
             st.write("조형요소:", f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}")
             st.write("조형원리:", f"균형, 대비, 강조, 리듬, 조화: {principles1}")
             st.write("소재:", f"그림의 주제: {subject1}, 공간별 내용: {subject2}")
-
+            
             # 이미지 데이터를 다운로드하기
             response = requests.get(generated_image_url)
             image_bytes = BytesIO(response.content)
