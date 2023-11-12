@@ -41,7 +41,7 @@ if generate_button:
     else:
         # 입력된 시, 소재, 스타일을 영어로 번역하는 로직
         try:
-            translation_prompt = f"너는 초등학생의 동시를 바탕으로 어울리는 그림을 그리는 화가야. 다음 시를 영어로 번역한 후 시의 내용을 읽고, 제목과 내용과 소재에 해당하는 그림을 그려주세요. 시: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {selected_style_english}"
+            translation_prompt = f"다음 문장부터 모두 영어로 번역해주세요. 영어로 이미 쓰여있는 부분은 번역하지않고 그대로 두세요. 너는 초등학생의 동시를 바탕으로 어울리는 그림을 그리는 화가야. 시의 내용을 읽고, 제목과 내용과 소재에 해당하는 그림을 그려주세요. 시: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {selected_style_english}"
             translation_response = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=translation_prompt,
