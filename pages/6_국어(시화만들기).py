@@ -51,6 +51,10 @@ if generate_button:
             
             # 번역된 영어 텍스트를 가져옵니다.
             translated_text = translation_response.choices[0].text.strip()
+
+            # 번역된 텍스트를 숨겨진 상태로 표시
+            with st.expander("번역된 텍스트 보기"):
+                st.text(translated_text)
             
             # 이미지 생성 요청
             image_response = openai.Image.create(
