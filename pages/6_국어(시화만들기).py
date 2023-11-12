@@ -1,5 +1,7 @@
 import streamlit as st
 import openai
+import requests
+from io import BytesIO
 
 # OpenAI API 키를 Streamlit secrets에서 가져옵니다.
 openai.api_key = st.secrets["api_key"]
@@ -48,6 +50,16 @@ if generate_button:
             
             # 이미지를 화면에 표시합니다.
             st.image(image_url, caption='시, 소재, 스타일에 기반한 이미지')
+
+            # 이미지 데이터를 다운로드하기
+            response = requests.get(image_url)
+            image_bytes = BytesIO(response.content)
+
+            # 다운로드 버튼 추가
+            st.download_button(label="이미지 다운로드",
+                               data=image_bytes,
+                               file_name="downloaded_image.jpg",
+                               mime="image/jpeg")
             
         except openai.error.OpenAIError as e:
             st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")
