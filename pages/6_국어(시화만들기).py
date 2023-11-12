@@ -27,7 +27,7 @@ if generate_button:
     else:
         # 입력된 시, 소재, 스타일을 영어로 번역하는 로직
         try:
-            translation_prompt = f"다음 시를 영어로 번역한 후, 이 시와 어울리는 그림을 그려주세요. 시: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {style}"
+            translation_prompt = f"너는 초등학생의 동시를 바탕으로 어울리는 그림을 그리는 화가야. 다음 시를 영어로 번역한 후 시의 내용을 읽고, 제목과 내용과 소재에 해당하는 그림을 그려주세요. 시: {poem}\n\n그림에 꼭 들어갈 소재: {subject}\n\n선택한 그림 스타일: {style}"
             translation_response = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=translation_prompt,
@@ -41,25 +41,26 @@ if generate_button:
             # 이미지 생성 요청
             image_response = openai.Image.create(
                 prompt=translated_text,
-                n=1,
+                n=3,
                 size="1024x1024"
             )
             
-            # 생성된 이미지의 URL을 가져옵니다.
-            image_url = image_response['data'][0]['url']
-            
-            # 이미지를 화면에 표시합니다.
-            st.image(image_url, caption='시, 소재, 스타일에 기반한 이미지')
+             # 각 이미지에 대한 처리
+            for i, data in enumerate(image_response['data']):
+                image_url = data['url']
+                
+                # 이미지를 화면에 표시합니다.
+                st.image(image_url, caption=f'이미지 {i + 1}')
 
-            # 이미지 데이터를 다운로드하기
-            response = requests.get(image_url)
-            image_bytes = BytesIO(response.content)
+                # 이미지 데이터를 다운로드하기
+                response = requests.get(image_url)
+                image_bytes = BytesIO(response.content)
 
-            # 다운로드 버튼 추가
-            st.download_button(label="이미지 다운로드",
-                               data=image_bytes,
-                               file_name="downloaded_image.jpg",
-                               mime="image/jpeg")
+                # 각 이미지에 대한 다운로드 버튼 추가
+                st.download_button(label=f"이미지 {i + 1} 다운로드",
+                                   data=image_bytes,
+                                   file_name=f"downloaded_image_{i + 1}.jpg",
+                                   mime="image/jpeg")
             
         except openai.error.OpenAIError as e:
             st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")
