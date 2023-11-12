@@ -81,4 +81,3 @@ if generate_button:
             
         except openai.error.OpenAIError as e:
             st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")
-``
