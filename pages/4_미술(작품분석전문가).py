@@ -14,14 +14,23 @@ st.header("문제상황")
 
 # 설명
 text = '''
-아래의 미술 작품을 보고 주제, 조형요소, 원리에 대해서 분석해보세요.
+아래 드롭다운 메뉴에서 미술 작품을 선택하고 주제, 조형요소, 원리에 대해서 분석해보세요.
 '''
 st.write(text)
 
-image_url = 'https://img.hani.co.kr/imgdb/resize/2012/0310/133125919362_20120310.JPG'
+# 이미지 URL과 캡션을 딕셔너리로 정의
+images = {
+    'Composition II with Red Blue and Yellow': 'https://img.hani.co.kr/imgdb/resize/2012/0310/133125919362_20120310.JPG',
+    '세한도': 'https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/aXte/image/TkVLv4CxMI4Z8o0qN6B9O3eZFTI.png',
+    '절규': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/The_Scream.jpg/1607px-The_Scream.jpg',
+    '피레네의 성': 'https://www.greencurator.co.kr/data/item/GC17-A502-RM40MOT/GC17A502RM40MOT.jpg'
+}
 
-# Display the image using the st.image function
-st.image(image_url, caption='Composition II with Red Blue and Yellow')
+# 드롭다운 메뉴를 생성하고 사용자의 선택을 가져옵니다.
+selected_caption = st.selectbox("미술 작품을 선택하세요:", options=list(images.keys()))
+
+# 선택된 캡션에 해당하는 이미지를 표시합니다.
+st.image(images[selected_caption], caption=selected_caption)
 
 # 사용자 입력
 elements1 = st.text_input("점, 선, 면에 대해서 적어보세요.")
@@ -68,6 +77,9 @@ if generate_button:
             
             # 이미지를 화면에 표시합니다.
             st.image(generated_image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
+            st.write("조형요소:", f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}")
+            st.write("조형원리:", f"균형, 대비, 강조, 리듬, 조화: {principles1}")
+            st.write("소재:", f"그림의 주제: {subject1}, 공간별 내용: {subject2}")
 
             # 이미지 데이터를 다운로드하기
             response = requests.get(generated_image_url)
