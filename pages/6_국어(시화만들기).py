@@ -44,6 +44,11 @@ if generate_button:
                 n=3,
                 size="1024x1024"
             )
+                        
+            if 'data' in image_response:
+                for i, data in enumerate(image_response['data']):
+                    image_url = data['url']
+                    st.write(f"이미지 {i + 1} URL: {image_url}")  # URL 출력
             
              # 각 이미지에 대한 처리
             for i, data in enumerate(image_response['data']):
