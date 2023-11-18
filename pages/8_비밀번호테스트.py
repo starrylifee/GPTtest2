@@ -72,22 +72,24 @@ if password == correct_password:
                     quality="standard",
                     n=1,
                 )
+                try:
+                    generated_image_url = image_response.data[0].url
 
-                generated_image_url = image_response.data[0].url
+                    st.image(generated_image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
+                    st.write("조형요소:", f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}")
+                    st.write("조형원리:", f"균형, 대비, 강조, 리듬, 조화: {principles1}")
+                    st.write("소재:", f"그림의 주제: {subject1}, 공간별 내용: {subject2}")
 
-                st.image(generated_image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
-                st.write("조형요소:", f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}")
-                st.write("조형원리:", f"균형, 대비, 강조, 리듬, 조화: {principles1}")
-                st.write("소재:", f"그림의 주제: {subject1}, 공간별 내용: {subject2}")
+                    response = requests.get(generated_image_url)
+                    image_bytes = BytesIO(response.content)
 
-                response = requests.get(generated_image_url)
-                image_bytes = BytesIO(response.content)
+                    st.download_button(label="이미지 다운로드",
+                                    data=image_bytes,
+                                    file_name="generated_image.jpg",
+                                    mime="image/jpeg")
+                except openai.error.OpenAIError as e:
+                    st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")
 
-                st.download_button(label="이미지 다운로드",
-                                   data=image_bytes,
-                                   file_name="generated_image.jpg",
-                                   mime="image/jpeg")
-                
             except openai.error.OpenAIError as e:
                 st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")
 else:
