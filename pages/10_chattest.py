@@ -33,7 +33,7 @@ st.divider()
 
 @st.experimental_memo
 def gptapi(persona, user):
-     response = client.chat.completions.create(
+    response = client.chat.completions.create(
          model="gpt-3.5-turbo",
          messages=[
              {"role": "system", "content": persona},
@@ -41,8 +41,8 @@ def gptapi(persona, user):
          ],
          max_tokens=1000,
          temperature=1
-     )
-     return response["choices"][0]["message"]["content"]
+    )
+    return response['choices'][0]['message']['content']
 
 persona_prompt1 = '''
 너는 사회선생님이야. 지금까지 우리 반은 도시화의 문제점(인구과밀, 환경오염, 사람이 적어지는 농촌)에 대해서 배웠어. 학생들은 도시화를 막는 방법에 대해서 고민했고, 학생들이 낸 해답을 너에게 제시할거야.
@@ -54,5 +54,5 @@ persona_prompt1 = '''
 
 # 사용자 입력에 대한 응답 생성
 if st.button("나의 해결방안 논의하기"):
-     step1 = gptapi(persona_prompt1, research)
-     st.write(step1)
+    step1 = gptapi(persona_prompt1, research)
+    st.write(step1)
