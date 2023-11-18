@@ -53,7 +53,7 @@ if password == correct_password:
                     prompt=image_prompt,
                     size="1024x1024",
                     quality="standard",
-                    n=3
+                    n=1
                 )
                                     
                 # 각 이미지에 대한 처리
