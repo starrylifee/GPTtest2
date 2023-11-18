@@ -11,7 +11,7 @@ st.divider()
 
 st.header("왼쪽의 페이지에서 원하는 도구를 선택하세요.")
 
-st.write("starrylife")
+st.write("비밀번호가 걸려있습니다.")
 
 
 #팁
