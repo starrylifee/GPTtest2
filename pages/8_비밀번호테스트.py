@@ -59,7 +59,7 @@ if password == correct_password:
                 temperature=0.3
             )
 
-            translated_text = translation_response.choices[0].text.strip()
+            translated_text = translation_response['choices'][0]['message']['content']
 
             with st.expander("번역된 텍스트 보기"):
                 st.text(translated_text)
