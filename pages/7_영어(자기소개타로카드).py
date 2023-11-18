@@ -21,11 +21,11 @@ if password == correct_password:
     # 사용자 입력
     name = st.text_input("이름을 입력하세요:")
     gender = st.radio("성별:", ('남자', '여자'))
-    age = st.slider("나이:", 5, 18)
+    age = st.slider("나이:", 5, 30)
     likes_items = st.text_input("좋아하는 물건은 무엇인가요? (쉼표로 구분하여 최대 3개까지)")
-    likes_people = st.text_input("존경하는 사람은 누구인가요? (쉼표로 구분하여 최대 3개까지)")
+    likes_people = st.text_input("좋아하는 사람은 누구인가요? (쉼표로 구분하여 최대 3개까지)")
     aspiration = st.text_input("장래희망은 무엇인가요?")
-    want_to_do = st.text_input("지금 하고 싶은 것은 무엇인가요?")
+    want_to_do = st.text_input("지금 당장 하고 싶은 것은 무엇인가요?")
     favorite_food = st.text_input("가장 좋아하는 음식은 무엇인가요?")
     favorite_country = st.text_input("가장 좋아하는 나라는 어디인가요?")
 
