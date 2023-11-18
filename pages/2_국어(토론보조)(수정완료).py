@@ -34,39 +34,40 @@ if password == correct_password:
 
     st.divider()
 
+    # gptapi 함수 정의
+    @st.experimental_memo
+    def gptapi(prompt, user_input):
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": user_input}
+            ],
+            max_tokens=1000,
+            temperature=1
+        )
+        return response.choices[0].message.content
+
+    persona_prompt = '''
+    인공지능 교사로서, 토론 수업에 참여하는 학생들의 주장과 근거를 평가해야 합니다. 
+    학생들이 제시한 주장과 근거를 바탕으로 다음 작업을 수행해주세요.
+
+    1단계: 학생이 제시한 주장과 근거를 간략히 요약해주세요.
+
+    2단계: 제시된 근거의 타당성을 평가하고, 주장을 강화할 수 있는 추가적인 근거나 정보를 제안해주세요.
+
+    3단계: 예상되는 반론을 제시하여, 학생이 토론 준비를 보다 효과적으로 할 수 있도록 도와주세요.
+    
+    모든 단계별 출력은 개조식으로 간단히 출력해주세요.
+
+    만약 학생이 제시한 주장이나 근거가 부적절하거나 수업 주제와 맞지 않는 경우, "주제에 맞는 적절한 주장과 근거를 제시해주세요"라고 안내해주세요.
+    '''
+
     if argument and evidence1 and evidence2 and evidence3:  # 입력이 모두 존재할 때만 실행
         argument_evidence = f"{argument}, {evidence1}, {evidence2}, {evidence3}"
         st.write(argument_evidence)
 
         st.divider()
-
-        
-        def gptapi(prompt, argument_evidence):
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": prompt},
-                    {"role": "user", "content": argument_evidence}
-                ],
-                max_tokens=1000,
-                temperature=1
-            )
-            return response["choices"][0]["message"]["content"]
-
-        persona_prompt = '''
-        인공지능 교사로서, 토론 수업에 참여하는 학생들의 주장과 근거를 평가해야 합니다. 
-        학생들이 제시한 주장과 근거를 바탕으로 다음 작업을 수행해주세요.
-
-        1단계: 학생이 제시한 주장과 근거를 간략히 요약해주세요.
-
-        2단계: 제시된 근거의 타당성을 평가하고, 주장을 강화할 수 있는 추가적인 근거나 정보를 제안해주세요.
-
-        3단계: 예상되는 반론을 제시하여, 학생이 토론 준비를 보다 효과적으로 할 수 있도록 도와주세요.
-        
-        모든 단계별 출력은 개조식으로 간단히 출력해주세요.
-
-        만약 학생이 제시한 주장이나 근거가 부적절하거나 수업 주제와 맞지 않는 경우, "주제에 맞는 적절한 주장과 근거를 제시해주세요"라고 안내해주세요.
-        '''
 
         if st.button("주장과 근거 평가받기"): 
             evaluation = gptapi(persona_prompt, argument_evidence)
