@@ -1,10 +1,10 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import requests
 from io import BytesIO
 
 # OpenAI API 키를 Streamlit secrets에서 가져옵니다.
-openai.api_key = st.secrets["api_key"]
+client = OpenAI(api_key=st.secrets["api_key"])
 
 st.set_page_config(layout="wide")
 
@@ -65,13 +65,15 @@ if password == correct_password:
                 with st.expander("번역된 텍스트 보기"):
                     st.text(translated_text)
 
-                image_response = openai.Image.create(
-                    prompt=translated_text,
-                    n=1,
-                    size="1024x1024"
+                image_response = client.images.generate(
+                model="dall-e-3",
+                prompt=translated_text,
+                size="1024x1024",
+                quality="standard",
+                n=1,
                 )
 
-                generated_image_url = image_response['data'][0]['url']
+                generated_image_url = image_response.data[0].url
 
                 st.image(generated_image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
                 st.write("조형요소:", f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}")
