@@ -1,14 +1,15 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 
-openai.api_key = st.secrets["api_key"]
+# OpenAI 클라이언트 객체 생성
+client = OpenAI(api_key=st.secrets["api_key"])
 
 st.set_page_config(layout="wide")
 
 st.title("문제해결방법 논의하기")
-
 st.header("문제상황")
 
+# 문제 상황 텍스트
 text = '''
 해찬이네 가족이 도시로 이사 온 첫날, 해찬이는 높은 빌딩 숲 사이로 차가운 바람이 부는 것을 느꼈어요. 마을에서는 볼 수 없었던 빛나는 네온사인과 큰 차들의 소음이 가득했지만, 밤하늘에 별은 거의 보이지 않았어요.
 
@@ -23,25 +24,25 @@ text = '''
 "도시가 커지면서 사람들이 살 집과 큰 건물을 짓기 위해 나무를 많이 베어내고, 공장과 차들이 많아져서 공기도 안 좋아졌단다."
 
 해찬이는 도시의 삶이 편리하긴 하지만, 마을의 싱그러운 자연과 밤하늘의 별, 그리고 사람들과의 따뜻한 인사가 그리웠어요. 그는 도시에서도 마을의 따스함을 느낄 수 있는 방법을 찾아야겠다고 생각했어요.
-'''
+''' 
 st.write(text)
 
+# 사용자로부터 입력 받기
 research = st.text_input("도시화를 해결할 수 있는 해결방안을 적고 엔터를 눌러주세요.")
-
 st.divider()
 
 @st.experimental_memo
 def gptapi(persona, user):
-     response = openai.ChatCompletion.create(
-     model="gpt-3.5-turbo",
-     messages=[
-         {"role": "system", "content" : persona},
-         {"role": "user", "content": user}
-     ],
-     max_tokens = 1000,
-     temperature = 1
-     )
-     return response["choices"][0]["message"]["content"]
+    response = client.chat.completions.create(
+         model="gpt-3.5-turbo",
+         messages=[
+             {"role": "system", "content": persona},
+             {"role": "user", "content": user}
+         ],
+         max_tokens=1000,
+         temperature=1
+    )
+    return response.choices[0].message.content
 
 persona_prompt1 = '''
 너는 사회선생님이야. 지금까지 우리 반은 도시화의 문제점(인구과밀, 환경오염, 사람이 적어지는 농촌)에 대해서 배웠어. 학생들은 도시화를 막는 방법에 대해서 고민했고, 학생들이 낸 해답을 너에게 제시할거야.
@@ -51,15 +52,7 @@ persona_prompt1 = '''
 출력은 단계를 표현하지 않고 편지글처럼 선생님으로서의 대답만 글로 표현해줘.
 '''
 
-# persona_prompt2 = '''
-#     너는 역사선생님이야. 학생들이 조사해온 자료를 요악한 내용을 보고, 문제를 만들어줘
-#     '''
-
-# #클릭해야 실행되도록 버튼 만들기
-if st.button("나의 해결방안 논의하기"): 
-#     #복잡한 단계는 나누어 진행하기
-     step1 = gptapi(persona_prompt1, research)
-     st.write(step1)
-
-#     step2 = gptapi(persona_prompt2, step1)
-#     st.write(step2)
+# 사용자 입력에 대한 응답 생성
+if st.button("나의 해결방안 논의하기"):
+    step1 = gptapi(persona_prompt1, research)
+    st.write(step1)
