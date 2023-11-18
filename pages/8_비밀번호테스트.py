@@ -53,13 +53,13 @@ if password == correct_password:
         else:
             translation_prompt = f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}, 균형/대비/강조/리듬/조화: {principles1}, 주제: {subject1}, 공간별 내용: {subject2} - 이 설명을 영어로 번역해주세요."
             translation_response = client.chat.completions.create(
-                engine="text-davinci-003",
-                prompt=translation_prompt,
+                model="gpt-3.5-turbo-1106", 
+                messages=translation_prompt,
                 max_tokens=1024,
                 temperature=0.3
             )
 
-            translated_text = translation_response['choices'][0]['message']['content']
+            translated_text = translation_response.choices[0].message.content
 
             with st.expander("번역된 텍스트 보기"):
                 st.text(translated_text)
