@@ -19,7 +19,7 @@ if password == correct_password:
     st.header("학생 자기소개")
 
     # 사용자 입력
-    name = st.text_input("이름을 입력하세요:")
+    name = st.text_input("이름을 이니셜로 입력하세요. 예) J.Y.S.:")
     gender = st.radio("성별:", ('남자', '여자'))
     age = st.slider("나이:", 5, 30)
     likes_items = st.text_input("좋아하는 물건을 입력하세요 (쉼표로 구분, 최대 3개):")
@@ -36,21 +36,14 @@ if password == correct_password:
         if not all([name, likes_items, likes_people, aspiration, want_to_do, favorite_food, favorite_country]):
             st.warning("모든 필드를 채워주세요!")
         else:
-            # 입력된 데이터를 영어로 번역하기 위한 ChatGPT API 호출
-            translation_prompt = f"영어로 번역해주세요: '{name}은 {gender}입니다. 그들이 좋아하는 물건: {likes_items}, 좋아하는 사람: {likes_people}, 장래 희망: {aspiration}, 지금 하고 싶은 것: {want_to_do}, 좋아하는 음식: {favorite_food}, 좋아하는 나라: {favorite_country}'"
-            try:
-                translation_response = client.chat.completions.create(
-                    model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "user", "content": translation_prompt}
-                    ]
-                )
-                translated_text = translation_response.choices[0].message.content
+            # 이미지 생성 프롬프트
+            prompt = f"{gender} 아이의 중앙 일러스트레이션과 주변에 좋아하는 물건({likes_items}), 좋아하는 사람({likes_people}), 장래 희망({aspiration}), 지금 하고 싶은 것({want_to_do}), 좋아하는 음식({favorite_food}), 좋아하는 나라({favorite_country})을 둘러싼 타로 카드 디자인. 카드 하단에 '{name}'이라는 이름이 크게 표시됩니다."
 
+            try:
                 # OpenAI API를 호출하여 이미지 생성
                 image_response = client.images.generate(
                     model="dall-e-3",
-                    prompt=translated_text,
+                    prompt=prompt,
                     size="1024x1792",
                     quality="standard",
                     n=1
