@@ -13,12 +13,17 @@ user_input = st.text_input("질문을 입력하세요:")
 
 # 버튼이 클릭되면 응답 생성
 if st.button("응답 생성"):
-    # GPT-3.5 API 호출
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": user_input}
-        ]
-    )
-    # 응답 표시
-    st.write(response["choices"][0]["message"]["content"])
+    try:
+        # GPT-3.5 API 호출
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": user_input}
+            ]
+        )
+        # 응답 데이터 구조 확인
+        st.write("Response object:", response)
+        # 응답 표시
+        st.write("Generated response:", response["choices"][0]["message"]["content"])
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
