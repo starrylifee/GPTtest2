@@ -66,11 +66,11 @@ if password == correct_password:
                     st.text(translated_text)
 
                 image_response = client.images.generate(
-                model="dall-e-3",
-                prompt=translated_text,
-                size="1024x1024",
-                quality="standard",
-                n=1,
+                    model="dall-e-3",
+                    prompt=translated_text,
+                    size="1024x1024",
+                    quality="standard",
+                    n=1,
                 )
 
                 generated_image_url = image_response.data[0].url
