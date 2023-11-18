@@ -42,7 +42,7 @@ def gptapi(persona, user):
          max_tokens=1000,
          temperature=1
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
 
 persona_prompt1 = '''
 너는 사회선생님이야. 지금까지 우리 반은 도시화의 문제점(인구과밀, 환경오염, 사람이 적어지는 농촌)에 대해서 배웠어. 학생들은 도시화를 막는 방법에 대해서 고민했고, 학생들이 낸 해답을 너에게 제시할거야.

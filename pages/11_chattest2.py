@@ -24,6 +24,6 @@ if st.button("응답 생성"):
         # 응답 데이터 구조 확인
         st.write("Response object:", response)
         # 응답 표시
-        st.write("Generated response:", response["choices"][0]["message"]["content"])
+        st.write("Generated response:", response.choices[0].message.content)
     except Exception as e:
         st.error(f"An error occurred: {e}")
