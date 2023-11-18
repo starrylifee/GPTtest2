@@ -50,21 +50,18 @@ if generate_button:
             )
                                    
             # 각 이미지에 대한 처리
-            for i, data in enumerate(image_response.data):
-                image_url = data.url
-                
-                # 이미지를 화면에 표시합니다.
-                st.image(image_url, caption=f'이미지 {i + 1}')
+            image_url = image_response.data[0].url  # 응답 구조에 따라 적절히 추출
+            st.image(image_url, caption='생성된 이미지')
 
-                # 이미지 데이터를 다운로드하기
-                response = requests.get(image_url)
-                image_bytes = BytesIO(response.content)
+            # 이미지 다운로드 준비
+            response = requests.get(image_url)
+            image_bytes = BytesIO(response.content)
 
-                # 각 이미지에 대한 다운로드 버튼 추가
-                st.download_button(label=f"이미지 {i + 1} 다운로드",
-                                   data=image_bytes,
-                                   file_name=f"downloaded_image_{i + 1}.jpg",
-                                   mime="image/jpeg")
+            # 이미지 다운로드 버튼
+            st.download_button(label="이미지 다운로드",
+                            data=image_bytes,
+                            file_name="downloaded_image.jpg",
+                            mime="image/jpeg")
             
         except Exception as e:
             st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")

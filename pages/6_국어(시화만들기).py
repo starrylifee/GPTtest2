@@ -59,7 +59,7 @@ if generate_button:
             # 이미지 생성 요청
             image_response = openai.Image.create(
                 prompt=translated_text,
-                n=3,
+                n=1,
                 size="1024x1024"
             )
                                    
