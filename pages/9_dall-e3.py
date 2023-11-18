@@ -18,7 +18,7 @@ response = client.images.generate(
 )
 
 # 응답에서 이미지 URL 추출 (API 업데이트에 따라 달라질 수 있음)
-image_url = response['data'][0]['url']  # 예시로, 실제 응답 구조에 맞춰야 함
+image_url = response.data[0].url  # 예시로, 실제 응답 구조에 맞춰야 함
 
 # 이미지 URL 출력
 st.image(image_url)
