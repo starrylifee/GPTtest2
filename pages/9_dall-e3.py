@@ -1,5 +1,5 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import requests
 from io import BytesIO
 
@@ -8,7 +8,6 @@ openai.api_key = st.secrets["api_key"]
 
 st.set_page_config(layout="wide")
 
-from openai import OpenAI
 client = OpenAI()
 
 response = client.images.generate(
