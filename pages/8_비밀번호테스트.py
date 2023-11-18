@@ -51,43 +51,40 @@ if password == correct_password:
         if not (elements1 and elements2 and elements3 and principles1 and subject1 and subject2):
             st.warning("모든 필드를 채워주세요!")
         else:
-            try:
-                translation_prompt = f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}, 균형/대비/강조/리듬/조화: {principles1}, 주제: {subject1}, 공간별 내용: {subject2} - 이 설명을 영어로 번역해주세요."
-                translation_response = client.chat.completions.create(
-                    engine="text-davinci-003",
-                    prompt=translation_prompt,
-                    max_tokens=1024,
-                    temperature=0.3
-                )
+            translation_prompt = f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}, 균형/대비/강조/리듬/조화: {principles1}, 주제: {subject1}, 공간별 내용: {subject2} - 이 설명을 영어로 번역해주세요."
+            translation_response = client.chat.completions.create(
+                engine="text-davinci-003",
+                prompt=translation_prompt,
+                max_tokens=1024,
+                temperature=0.3
+            )
 
-                translated_text = translation_response.choices[0].text.strip()
+            translated_text = translation_response.choices[0].text.strip()
 
-                with st.expander("번역된 텍스트 보기"):
-                    st.text(translated_text)
+            with st.expander("번역된 텍스트 보기"):
+                st.text(translated_text)
 
-                image_response = client.images.generate(
-                    model="dall-e-3",
-                    prompt=translated_text,
-                    size="1024x1024",
-                    quality="standard",
-                    n=1,
-                )
-                generated_image_url = image_response.data[0].url
+            image_response = client.images.generate(
+                model="dall-e-3",
+                prompt=translated_text,
+                size="1024x1024",
+                quality="standard",
+                n=1,
+            )
+            generated_image_url = image_response.data[0].url
 
-                st.image(generated_image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
-                st.write("조형요소:", f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}")
-                st.write("조형원리:", f"균형, 대비, 강조, 리듬, 조화: {principles1}")
-                st.write("소재:", f"그림의 주제: {subject1}, 공간별 내용: {subject2}")
+            st.image(generated_image_url, caption='여러분이 본 그림이 이 그림이 맞나요?')
+            st.write("조형요소:", f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}")
+            st.write("조형원리:", f"균형, 대비, 강조, 리듬, 조화: {principles1}")
+            st.write("소재:", f"그림의 주제: {subject1}, 공간별 내용: {subject2}")
 
-                response = requests.get(generated_image_url)
-                image_bytes = BytesIO(response.content)
+            response = requests.get(generated_image_url)
+            image_bytes = BytesIO(response.content)
 
-                st.download_button(label="이미지 다운로드",
-                                data=image_bytes,
-                                file_name="generated_image.jpg",
-                                mime="image/jpeg")
+            st.download_button(label="이미지 다운로드",
+                            data=image_bytes,
+                            file_name="generated_image.jpg",
+                            mime="image/jpeg")
                 
-            except openai.error.OpenAIError as e:
-                st.error(f"API 요청 중 오류가 발생했습니다: {str(e)}")
 else:
     st.warning("올바른 비밀번호를 입력해주세요.")
