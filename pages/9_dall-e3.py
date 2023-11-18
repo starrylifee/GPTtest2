@@ -17,8 +17,14 @@ response = client.images.generate(
   n=1,
 )
 
-# 응답에서 이미지 URL 추출 (API 업데이트에 따라 달라질 수 있음)
-image_url = response.data[0].url  # 예시로, 실제 응답 구조에 맞춰야 함
+# 응답 객체의 구조와 내용 확인을 위한 디버깅
+print("Response Type:", type(response))
+print("Response Content:", response)
 
-# 이미지 URL 출력
-st.image(image_url)
+# 응답에서 이미지 URL 추출 (API 업데이트에 따라 달라질 수 있음)
+try:
+    image_url = response.data[0].url  # 예시로, 실제 응답 구조에 맞춰야 함
+    # 이미지 URL 출력
+    st.image(image_url)
+except AttributeError as e:
+    st.error("An error occurred while accessing the response: " + str(e))
