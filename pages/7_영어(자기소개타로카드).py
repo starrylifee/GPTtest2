@@ -44,7 +44,7 @@ if password == correct_password:
                 image_response = client.images.generate(
                     model="dall-e-3",
                     prompt=prompt,
-                    size="1024x1792"
+                    size="1024x1792",
                     quality="standard",
                     n=1
                 )
