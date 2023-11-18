@@ -17,11 +17,11 @@ if password == correct_password:
 
     # 이미지 생성 요청
     response = client.images.generate(
-    model="dall-e-3",
-    prompt="a white siamese cat",
-    size="1024x1024",
-    quality="standard",
-    n=1,
+        model="dall-e-3",
+        prompt="a white siamese cat",
+        size="1024x1024",
+        quality="standard",
+        n=1,
     )
 
     # 응답에서 이미지 URL 추출 (API 업데이트에 따라 달라질 수 있음)
