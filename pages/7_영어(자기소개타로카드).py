@@ -4,7 +4,7 @@ import requests
 from io import BytesIO
 
 # Streamlit 시크릿으로부터 OpenAI API 키를 로드합니다.
-openai.api_key = st.secrets["openai_api_key"]
+openai.api_key = st.secrets["api_key"]
 
 # 페이지 레이아웃을 설정합니다.
 st.set_page_config(layout="wide")
