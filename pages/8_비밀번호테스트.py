@@ -53,7 +53,7 @@ if password == correct_password:
         else:
             try:
                 translation_prompt = f"점, 선, 면: {elements1}, 질감: {elements2}, 공간: {elements3}, 균형/대비/강조/리듬/조화: {principles1}, 주제: {subject1}, 공간별 내용: {subject2} - 이 설명을 영어로 번역해주세요."
-                translation_response = openai.Completion.create(
+                translation_response = client.chat.completions.create(
                     engine="text-davinci-003",
                     prompt=translation_prompt,
                     max_tokens=1024,
