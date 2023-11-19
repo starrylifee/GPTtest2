@@ -5,13 +5,13 @@ openai.api_key = st.secrets
 
 st.set_page_config(layout="wide")
 
-st.title("초등학교 인공지능 도구 모음")
+st.title("초등학교 인공지능활용 도구 모음")
 
 st.divider()
 
 st.header("왼쪽의 페이지에서 원하는 도구를 선택하세요.")
 
-st.write("비밀번호가 걸려있습니다.")
+st.write("비밀번호가 걸려있습니다. by Starrylife")
 
 
 #팁
