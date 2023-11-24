@@ -37,7 +37,7 @@ if password == correct_password:
     generate_button = st.button("이미지 생성")
 
     if generate_button:
-        prompt = f"{organ}을 위한 {device_type}. 변화: {effect1}, {effect2}, {effect3}."
+        prompt = f"{organ}을 위한 {device_type}. 변화: {effect1}, {effect2}, {effect3} 를 글씨를 적지 말고 그림으로만 표현."
 
         try:
             # OpenAI API를 호출하여 이미지 생성

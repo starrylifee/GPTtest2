@@ -34,7 +34,7 @@ if password == correct_password:
         characters = [character for character in characters if character]  # 빈 문자열 제외
         characters_str = ", ".join(characters) if characters else "인물 없음"
 
-        prompt = f"{era}의 {location}에서 {characters_str}가 있는 장면. 배경: {background}. 역사적 사실: {historical_fact}."
+        prompt = f"{era}의 {location}에서 {characters_str}가 있는 장면. 배경: {background}. 역사적 사실: {historical_fact}을 글씨를 적지 말고 그림으로만 표현."
 
         try:
             # OpenAI API를 호출하여 이미지 생성
