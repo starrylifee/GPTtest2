@@ -40,11 +40,11 @@ if password == correct_password:
     mbti_type = extroversion[1] + sensing[1] + thinking[1] + lifestyle[1]
 
     if all([extroversion, sensing, thinking, lifestyle]):
-        st.write(f"당신은 {mbti_type}입니다.")
+        st.write(f"당신의 MBTI 유형은 {mbti_type}입니다.")
 
-    animal = st.text_input("나를 닮은 동물이 있다면 무엇인가요? (선택사항)")
+    animal = st.text_input("당신을 동물로 비유한다면 어떤 동물이 되고 싶으세요? (선택사항)")
 
-    st.caption("※ '나를 닮은 동물' 항목은 선택사항입니다. 비워두어도 캐릭터 이미지를 생성할 수 있습니다.")
+    st.caption("※ '당신을 동물로 비유한다면' 항목은 선택사항입니다. 비워두어도 캐릭터 이미지를 생성할 수 있습니다.")
 
     generate_button = st.button("캐릭터 생성하기")
 
@@ -53,13 +53,18 @@ if password == correct_password:
         if not all([name, gender, hair_color, eye_color, favorite_activity]):
             st.warning("필수 항목을 모두 채워주세요!")
         else:
-            color_prompt = f"{name}, {gender} 아이, 나이 {age}, 머리 색상 {hair_color}, 눈 색상 {eye_color}. {mbti_type} 유형의 성격으로 {favorite_activity}을(를) 하는 모습."
+            if animal:
+                # 시나리오 2: 사용자가 동물을 입력한 경우
+                prompt = f"{animal}은(는) {mbti_type} 성격으로 {favorite_activity}을(를) 하는 모습입니다."
+            else:
+                # 시나리오 1: 사용자가 동물을 입력하지 않은 경우
+                prompt = f"{gender} 아이, 나이 {age}, 머리 색상 {hair_color}, 눈 색상 {eye_color}. {mbti_type} 유형의 성격으로 {favorite_activity}을(를) 하는 모습입니다."
 
             try:
                 # 컬러 이미지 생성
                 color_image_response = client.images.generate(
                     model="dall-e-3",
-                    prompt=color_prompt,
+                    prompt=prompt,
                     size="1024x1024",
                     quality="standard",
                     n=1

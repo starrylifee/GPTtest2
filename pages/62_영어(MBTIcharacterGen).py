@@ -53,26 +53,31 @@ if password == correct_password:
         if not all([name, gender, hair_color, eye_color, favorite_activity]):
             st.warning("Please fill in all required fields!")
         else:
-            color_prompt = f"{name}, {gender} at age {age}, with hair color {hair_color} and eye color {eye_color}. With an MBTI type of {mbti_type}, enjoying {favorite_activity}."
+            if animal:
+                # Scenario 2: If the user entered an animal
+                prompt = f"{animal} with an MBTI type of {mbti_type} enjoying {favorite_activity}."
+            else:
+                # Scenario 1: If no animal is entered
+                prompt = f"{name}, {gender} at age {age}, with hair color {hair_color} and eye color {eye_color}. With an MBTI type of {mbti_type}, enjoying {favorite_activity}."
 
             try:
                 # Generate a color image
                 color_image_response = client.images.generate(
                     model="dall-e-3",
-                    prompt=color_prompt,
+                    prompt=prompt,
                     size="1024x1024",
                     quality="standard",
                     n=1
                 )
                 color_image_url = color_image_response.data[0].url
-                st.image(color_image_url, caption=f"{name}'s character")
+                st.image(color_image_url, caption="Character Image")
 
                 # Download image button
                 response = requests.get(color_image_url)
                 image_bytes = BytesIO(response.content)
                 st.download_button(label="Download Image",
                                    data=image_bytes,
-                                   file_name=f"{name}_character.jpg",
+                                   file_name=f"character.jpg",
                                    mime="image/jpeg")
             except AttributeError as e:
                 st.error("Error accessing the response: " + str(e))
