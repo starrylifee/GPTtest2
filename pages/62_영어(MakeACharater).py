@@ -22,43 +22,26 @@ if password == correct_password:
     gender = st.radio("Gender:", ('Male', 'Female'))
     age = st.slider("Age:", 5, 100)
 
-    # Select hair color and eye color
+    # Select hair color, eye color, and character style
     hair_colors = ['Black', 'Brown', 'Blonde', 'Red', 'Gray', 'White', 'Other']
     eye_colors = ['Black', 'Brown', 'Blue', 'Green', 'Gray', 'Hazel', 'Other']
+    character_styles = ['Cartoon Style', 'Realistic Style', 'Watercolor Style', 'Sketch Style', 'Pixel Art Style']
+
     hair_color = st.selectbox("Select hair color:", hair_colors)
     eye_color = st.selectbox("Select eye color:", eye_colors)
+    character_style = st.selectbox("Select character style:", character_styles)
 
     favorite_activity = st.text_input("What is your favorite activity?")
-    
-    # Choose MBTI dimensions
-    extroversion = st.radio("Focus of Attention - Direction of Energy:", [('Extraversion (E)', 'E'), ('Introversion (I)', 'I')])
-    sensing = st.radio("Perceiving Function - How You Take in Information:", [('Sensing (S)', 'S'), ('Intuition (N)', 'N')])
-    thinking = st.radio("Judging Function - Basis of Decision Making:", [('Feeling (F)', 'F'), ('Thinking (T)', 'T')])
-    lifestyle = st.radio("Lifestyle Preference - How You Deal with the Outer World:", [('Judging (J)', 'J'), ('Perceiving (P)', 'P')])
-
-    # Calculate MBTI type
-    mbti_type = extroversion[1] + sensing[1] + thinking[1] + lifestyle[1]
-
-    if all([extroversion, sensing, thinking, lifestyle]):
-        st.write(f"Your MBTI type is {mbti_type}.")
-
-    animal = st.text_input("If you were an animal, what would you be? (Optional)")
-
-    st.caption("※ The 'If you were an animal' field is optional. You can leave it empty to generate a character image.")
+    animal = st.text_input("If you were an animal, what would you be?")
 
     generate_button = st.button("Generate Character")
 
     if generate_button:
         # Check if required fields are filled
-        if not all([name, gender, hair_color, eye_color, favorite_activity]):
+        if not all([name, gender, hair_color, eye_color, favorite_activity, animal]):
             st.warning("Please fill in all required fields!")
         else:
-            if animal:
-                # Scenario 2: If the user entered an animal
-                prompt = f"{animal} with an MBTI type of {mbti_type} enjoying {favorite_activity}."
-            else:
-                # Scenario 1: If no animal is entered
-                prompt = f"{name}, {gender} at age {age}, with hair color {hair_color} and eye color {eye_color}. With an MBTI type of {mbti_type}, enjoying {favorite_activity}."
+            prompt = f"{name}, a {gender} at age {age}, with hair color {hair_color} and eye color {eye_color} in {character_style}, enjoying {favorite_activity}. And an image of an {animal} doing the same activity."
 
             try:
                 # Generate a color image
