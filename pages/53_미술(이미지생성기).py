@@ -10,10 +10,6 @@ client = OpenAI(api_key=st.secrets["api_key"])
 # 페이지 레이아웃 설정
 st.set_page_config(layout="wide")
 
-# 데이터프레임 생성 및 표시
-image_options_df = pd.DataFrame(image_options_summary)
-st.table(image_options_df)
-
 # 비밀번호 입력
 password = st.text_input("비밀번호를 입력하세요:", type="password")
 correct_password = st.secrets["password"]
@@ -43,6 +39,9 @@ if password == correct_password:
             "1:1 (1024x1024), 9:16 (576x1024), 16:9 (1024x576)"
         ]
     }
+    # 데이터프레임 생성 및 표시
+    image_options_df = pd.DataFrame(image_options_summary)
+    st.table(image_options_df)
 
     st.title("이미지를 만들어 보세요.")
     st.header("이미지 옵션")
