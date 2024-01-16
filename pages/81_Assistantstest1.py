@@ -67,4 +67,4 @@ if password == correct_password:
             evaluation = assistant_api(argument_evidence)
             st.write(evaluation)
 else:
-st.warning("올바른 비밀번호를 입력해주세요.")
+    st.warning("올바른 비밀번호를 입력해주세요.")
