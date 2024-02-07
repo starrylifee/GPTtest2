@@ -25,7 +25,7 @@ if password == correct_password:
 
     if generate_button:
         # 프롬프트 구성
-        prompt = f"조선 임진왜란 시, {character}의 입장에서 {emotion}을 느끼는 장면. 이순신 장군과의 전투, 왜군의 침략, 백성들의 고통, 명나라 병사의 지원 등을 상상하여 그림으로 표현."
+        prompt = f"조선 임진왜란 시, {character}의 입장에서 {emotion}을 느끼는 장면"
 
         try:
             # OpenAI API를 호출하여 이미지 생성
